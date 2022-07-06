@@ -13,16 +13,36 @@ function App() {
     BooksAPI.getAll().then((res) => setAllBooks(res));
   }, []);
 
+  const shelves = [
+    {
+      value: "currentlyReading",
+      title: "Currently Reading",
+    },
+    {
+      value: "wantToRead",
+      title: "Want to Read",
+    },
+    {
+      value: "read",
+      title: "Read",
+    },
+    {
+      value: "none",
+      title: "None",
+    },
+  ];
+
   return (
     <Routes>
       <Route
         exact
         path="/"
-        element={<MyBooks books={allbooks}/>}
+        element={<MyBooks books={allbooks} shelves={shelves}/>}
       />
       <Route
         path="/search"
-        element={<SearchBooks books={allbooks}/>} />
+        element={<SearchBooks books={allbooks} shelves={shelves}/>} 
+      />
     </Routes>
   );
 }

@@ -3,27 +3,13 @@ import { useState, useEffect } from 'react';
 import BookShelf from "./BookShelf";
 import { Link } from "react-router-dom";
 
-const MyBooks = ({ books }) => {
-
-    const [shelfList, setSheves] = useState([]);
-
-    useEffect(() => {
-        let shelves = [];
-        
-        books.forEach(book => {
-            if(shelves.indexOf(book.shelf) === -1){
-                shelves.push(book.shelf);
-            }
-        });
-
-        setSheves(shelves);
-    }, [books]);
+const MyBooks = ({ books, shelves}) => {
 
     const getBooksFromShelf = ((books, shelf) => {
-        if(books.length){
+        if (books.length) {
             return books.filter((book) => book.shelf === shelf);
         }
-        else{
+        else {
             return [];
         }
     })
@@ -34,15 +20,13 @@ const MyBooks = ({ books }) => {
                 <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-                <BookShelf
-                    books={getBooksFromShelf(books, shelfList[0])}
-                    title={"Currently Reading"} />
-                <BookShelf
-                    books={getBooksFromShelf(books, shelfList[1])}
-                    title={"Want to Read"} />
-                <BookShelf
-                    books={getBooksFromShelf(books, shelfList[2])}
-                    title={"Read"} />
+                {shelves.map((shelf, index) => {
+                    return (<BookShelf
+                        key={index}
+                        books={getBooksFromShelf(books, shelf.value)}
+                        title={shelf.title} 
+                    />);
+                })}
             </div>
             <div className="open-search">
                 <Link
@@ -56,6 +40,7 @@ const MyBooks = ({ books }) => {
 
 MyBooks.propTypes = {
     books: PropTypes.array.isRequired,
+    shelves: PropTypes.array.isRequired,
 }
 
 export default MyBooks;

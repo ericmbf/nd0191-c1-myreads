@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 
-const Book = ({ book }) => {
+const Book = ({book}) => {
     let urlBook = book.imageLinks.smallThumbnail;
     
     return (
-        <li key={book.id} className="book">
+        <div className="book">
             <div className="book-top">
                 <div
                     className="book-cover"
@@ -33,7 +33,7 @@ const Book = ({ book }) => {
                     <div className="book-authors">{author}</div>
                 )
             })}
-        </li>
+        </div>
     );
 }
 
