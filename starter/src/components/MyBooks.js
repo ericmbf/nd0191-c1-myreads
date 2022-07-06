@@ -34,14 +34,16 @@ const MyBooks = ({ books }) => {
                 <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-                <BookShelf 
+                <BookShelf
                     books={getBooksFromShelf(books, shelfList[0])}
-                    title={"Currently Reading"}/>
-                <BookShelf 
-                    books={getBooksFromShelf(books, shelfList[1])} 
-                    title={"Want to Read"}/>
-                <BookShelf 
-                    books={getBooksFromShelf(books, shelfList[2])} 
+                    title={"Currently Reading"} />
+                <BookShelf
+                    books={getBooksFromShelf(books, shelfList[1])}
+                    title={"Want to Read"} />
+                <BookShelf
+                    books={getBooksFromShelf(books, shelfList[2])}
+                    title={"Read"} />
+            </div>
             <div className="open-search">
                 <Link
                     to={"/search"}
