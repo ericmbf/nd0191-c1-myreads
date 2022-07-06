@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { useState, useEffect } from 'react';
 import BookShelf from "./BookShelf";
+import { Link } from "react-router-dom";
 
 const MyBooks = ({ books }) => {
 
@@ -41,7 +42,11 @@ const MyBooks = ({ books }) => {
                     title={"Want to Read"}/>
                 <BookShelf 
                     books={getBooksFromShelf(books, shelfList[2])} 
-                    title={"Read"}/>
+            <div className="open-search">
+                <Link
+                    to={"/search"}
+                    className={"open-search"}
+                />
             </div>
         </div>
     );
