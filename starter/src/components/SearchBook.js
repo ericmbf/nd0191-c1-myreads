@@ -7,11 +7,17 @@ const SearchBook = ({ books, shelves, handleShelfUpdate}) => {
 
     const [query, setQuery] = useState("");
 
+    const checkAuthor = (query, array) => array.some((element) => {
+        return element.toLowerCase().includes(query.trim().toLowerCase());
+    });
+
     const showingBooks =
         query === "" ?
-            books : books.filter((c) =>
-                c.title.toLowerCase().includes(query.toLowerCase())
-            );
+        books : books.filter((c) => {
+            return checkAuthor(query, c.authors) ||
+                c.title.toLowerCase().includes(query.toLowerCase()) ;
+        }
+    );
 
     const handleQuery = (event) => {
         setQuery(event.target.value);
