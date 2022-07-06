@@ -3,7 +3,7 @@ import { useState} from 'react';
 import { Link } from "react-router-dom";
 import Book from "./Book";
 
-const SearchBook = ({ books }) => {
+const SearchBook = ({ books, shelves, handleShelfUpdate}) => {
 
     const [query, setQuery] = useState("");
 
@@ -35,8 +35,13 @@ const SearchBook = ({ books }) => {
             </div>
             <div className="search-books-results">
                 <ol className="books-grid">
-                    {showingBooks.map((book) => {
-                        return <Book book={book}/>
+                    {showingBooks.map((book, index) => {
+                        return <Book 
+                            index={index}
+                            book={book} 
+                            shelves={shelves} 
+                            handleShelfUpdate={handleShelfUpdate}
+                            />
                     })}
                 </ol>
             </div>
@@ -46,6 +51,7 @@ const SearchBook = ({ books }) => {
 
 SearchBook.propTypes = {
     books: PropTypes.array.isRequired,
+    handleShelfUpdate: PropTypes.func.isRequired,
 }
 
 export default SearchBook;

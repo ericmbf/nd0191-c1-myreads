@@ -1,9 +1,8 @@
 import PropTypes from "prop-types";
-import { useState, useEffect } from 'react';
 import BookShelf from "./BookShelf";
 import { Link } from "react-router-dom";
 
-const MyBooks = ({ books, shelves}) => {
+const MyBooks = ({ books, shelves, handleShelfUpdate }) => {
 
     const getBooksFromShelf = ((books, shelf) => {
         if (books.length) {
@@ -21,11 +20,18 @@ const MyBooks = ({ books, shelves}) => {
             </div>
             <div className="list-books-content">
                 {shelves.map((shelf, index) => {
-                    return (<BookShelf
-                        key={index}
-                        books={getBooksFromShelf(books, shelf.value)}
-                        title={shelf.title} 
-                    />);
+                    if(shelf.value !== "none"){
+                        return (<BookShelf
+                            key={index}
+                            books={getBooksFromShelf(books, shelf.value)}
+                            title={shelf.title}
+                            handleShelfUpdate={handleShelfUpdate}
+                            shelves={shelves}
+                        />);
+                    }
+                    else{
+                        return "";
+                    }
                 })}
             </div>
             <div className="open-search">
@@ -41,6 +47,7 @@ const MyBooks = ({ books, shelves}) => {
 MyBooks.propTypes = {
     books: PropTypes.array.isRequired,
     shelves: PropTypes.array.isRequired,
+    handleShelfUpdate: PropTypes.func.isRequired,
 }
 
 export default MyBooks;

@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
-const Book = ({book}) => {
+const Book = ({book, shelves, handleShelfUpdate}) => {
     let urlBook = book.imageLinks.smallThumbnail;
-    
+
     return (
         <div className="book">
             <div className="book-top">
@@ -14,23 +14,32 @@ const Book = ({book}) => {
                         backgroundImage: `url(${urlBook})`
                     }} />
                 <div className="book-shelf-changer">
-                    <select>
-                        <option value="none" disabled>
-                            Move to...
-                        </option>
-                        <option value="currentlyReading">
-                            Currently Reading
-                        </option>
-                        <option value="wantToRead">Want to Read</option>
-                        <option value="read">Read</option>
-                        <option value="none">None</option>
+                    <select value={book.shelf} 
+                            onChange={(e) => handleShelfUpdate(book, e.target.value)}>
+                        {shelves.map((shelf, index) => {
+                            if(shelf.value === book.shelf){
+                                return (
+                                    <option key={index} value={shelf.value} disabled>
+                                        {shelf.title}
+                                    </option>
+                                );
+                            }
+                            else{
+                                return (
+                                    <option key={index} value={shelf.value}>
+                                        {shelf.title}
+                                    </option>
+                                );
+                            }
+                        })
+                    }
                     </select>
                 </div>
             </div>
             <div className="book-title">{book.title}</div>
-            {book.authors.map((author) => {
+            {book.authors.map((author, index) => {
                 return (
-                    <div className="book-authors">{author}</div>
+                    <div key={index} className="book-authors">{author}</div>
                 )
             })}
         </div>
@@ -39,6 +48,8 @@ const Book = ({book}) => {
 
 Book.propTypes = {
     book: PropTypes.object.isRequired,
+    shelves: PropTypes.array.isRequired,
+    handleShelfUpdate: PropTypes.func.isRequired
 }
 
 export default Book;
