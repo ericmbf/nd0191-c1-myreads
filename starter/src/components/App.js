@@ -22,7 +22,7 @@ function App() {
       />
       <Route
         path="/search"
-        element={<SearchBooks />} />
+        element={<SearchBooks books={allbooks}/>} />
     </Routes>
   );
 }
