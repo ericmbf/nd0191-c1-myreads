@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import BookList from "./BookList";
 
-const BookShelf = ({ books, title}) => {
+const BookShelf = ({ books, title }) => {
     return (
         <div className="bookshelf">
             <h2 className="bookshelf-title">{title}</h2>

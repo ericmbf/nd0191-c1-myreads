@@ -5,8 +5,8 @@ const BookList = ({ books }) => {
     return (
         <ol className="books-grid">
             {
-                books.length && books.map((book, index) => {
-                    return (<Book index={index} book={book} />)
+                books.length && books.map((book) => {
+                    return (<Book book={book} />)
                 })
             }
         </ol>

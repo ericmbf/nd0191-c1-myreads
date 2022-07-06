@@ -36,6 +36,12 @@ const MyBooks = ({ books }) => {
                 <BookShelf 
                     books={getBooksFromShelf(books, shelfList[0])}
                     title={"Currently Reading"}/>
+                <BookShelf 
+                    books={getBooksFromShelf(books, shelfList[1])} 
+                    title={"Want to Read"}/>
+                <BookShelf 
+                    books={getBooksFromShelf(books, shelfList[2])} 
+                    title={"Read"}/>
             </div>
         </div>
     );

@@ -1,8 +1,10 @@
 import PropTypes from "prop-types";
-const Book = ({index, book}) => {
+
+const Book = ({ book }) => {
     let urlBook = book.imageLinks.smallThumbnail;
+    
     return (
-        <li key={index} className="book">
+        <li key={book.id} className="book">
             <div className="book-top">
                 <div
                     className="book-cover"
@@ -10,7 +12,7 @@ const Book = ({index, book}) => {
                         width: 128,
                         height: 193,
                         backgroundImage: `url(${urlBook})`
-                    }}/>
+                    }} />
                 <div className="book-shelf-changer">
                     <select>
                         <option value="none" disabled>
@@ -36,7 +38,6 @@ const Book = ({index, book}) => {
 }
 
 Book.propTypes = {
-    index: PropTypes.number.isRequired,
     book: PropTypes.object.isRequired,
 }
 
