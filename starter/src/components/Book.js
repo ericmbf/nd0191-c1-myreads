@@ -1,7 +1,16 @@
 import PropTypes from "prop-types";
 
-const Book = ({book, shelves, handleShelfUpdate}) => {
-    let urlBook = book.imageLinks.smallThumbnail;
+const Book = ({ book, shelves, handleShelfUpdate }) => {
+
+    const getBookThumbnail = (book) => {
+        if ('imageLinks' in book) {
+            return book.imageLinks.smallThumbnail;
+        }
+        else {
+            return "";
+        }
+
+    }
 
     return (
         <div className="book">
@@ -11,7 +20,7 @@ const Book = ({book, shelves, handleShelfUpdate}) => {
                     style={{
                         width: 128,
                         height: 193,
-                        backgroundImage: `url(${urlBook})`
+                        backgroundImage: `url(${getBookThumbnail(book)})`
                     }} />
                 <div className="book-shelf-changer">
                     <select value={book.shelf} 
