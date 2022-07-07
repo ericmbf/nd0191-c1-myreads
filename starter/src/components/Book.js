@@ -12,6 +12,18 @@ const Book = ({ book, shelves, handleShelfUpdate }) => {
 
     }
 
+    const ShowAuthors = () => {
+        return (
+            book.authors.map((author, index) => {
+                return (
+                    <div key={index} className="book-authors">
+                        {author}
+                    </div>
+                );
+            })
+        );
+    }
+
     return (
         <div className="book">
             <div className="book-top">
@@ -46,11 +58,7 @@ const Book = ({ book, shelves, handleShelfUpdate }) => {
                 </div>
             </div>
             <div className="book-title">{book.title}</div>
-            {book.authors.map((author, index) => {
-                return (
-                    <div key={index} className="book-authors">{author}</div>
-                )
-            })}
+            {('authors' in book) && <ShowAuthors />}
         </div>
     );
 }
