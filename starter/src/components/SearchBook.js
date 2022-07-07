@@ -46,7 +46,7 @@ const SearchBook = ({ books, shelves, handleShelfUpdate}) => {
                 <ol className="books-grid">
                     {showingBooks.map((book, index) => {
                         return <Book 
-                            index={index}
+                            key={index}
                             book={book} 
                             shelves={shelves} 
                             handleShelfUpdate={handleShelfUpdate}
