@@ -26,20 +26,20 @@ function App() {
     },
   ];
 
-  const [allbooks, setAllBooks] = useState([]);
+  const [booksFromUser, setAllBooks] = useState([]);
 
   useEffect(() => {
     BooksAPI.getAll().then((res) => setAllBooks(res));
-  }, []);
+  }, [booksFromUser]);
 
-  const handleShelfUpdate = (bookChanged, newShelf) => {
-    BooksAPI.update(bookChanged, newShelf).then(() => {
-      const allbookChanged = allbooks.map(book => {
-        if (book.id === bookChanged.id) {
-          return { ...book, shelf: newShelf };
+  const handleShelfUpdate = (book, newShelf) => {
+    BooksAPI.update(book, newShelf).then(() => {
+      const allbookChanged = booksFromUser.map(b => {
+        if (b.id === book.id) {
+          return { ...b, shelf: newShelf };
         }
         else {
-          return book;
+          return b;
         }
       })
 
@@ -53,7 +53,7 @@ function App() {
         exact
         path="/"
         element={<MyBooks
-          books={allbooks}
+          books={booksFromUser}
           shelves={shelves}
           handleShelfUpdate={handleShelfUpdate}
         />}
@@ -61,7 +61,7 @@ function App() {
       <Route
         path="/search"
         element={<SearchBooks
-          books={allbooks}
+          booksFromUser={booksFromUser}
           shelves={shelves}
           handleShelfUpdate={handleShelfUpdate}
         />}

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const Book = ({ book, shelves, handleShelfUpdate }) => {
+const Book = ({ book, shelves, handleShelfUpdate, bookShelf }) => {
 
     const getBookThumbnail = (book) => {
         if ('imageLinks' in book) {
@@ -9,7 +9,6 @@ const Book = ({ book, shelves, handleShelfUpdate }) => {
         else {
             return "";
         }
-
     }
 
     const ShowAuthors = () => {
@@ -35,25 +34,27 @@ const Book = ({ book, shelves, handleShelfUpdate }) => {
                         backgroundImage: `url(${getBookThumbnail(book)})`
                     }} />
                 <div className="book-shelf-changer">
-                    <select value={book.shelf} 
-                            onChange={(e) => handleShelfUpdate(book, e.target.value)}>
+                    <select value={bookShelf}
+                        onChange={(e) => handleShelfUpdate(book, e.target.value)}>
+                        
+                        <option value={shelves[0].value} disabled>
+                            {bookShelf === "none" ? "Add to..." : "Move to... "}
+                        </option>
+
                         {shelves.map((shelf, index) => {
-                            if(shelf.value === book.shelf){
-                                return (
-                                    <option key={index} value={shelf.value} disabled>
-                                        {shelf.title}
-                                    </option>
-                                );
-                            }
-                            else{
+                            if ((bookShelf !== "none") || 
+                                (shelf.value !== "none")) {
                                 return (
                                     <option key={index} value={shelf.value}>
                                         {shelf.title}
                                     </option>
                                 );
                             }
+                            else{
+                                return null;
+                            }
                         })
-                    }
+                        }
                     </select>
                 </div>
             </div>
@@ -66,7 +67,8 @@ const Book = ({ book, shelves, handleShelfUpdate }) => {
 Book.propTypes = {
     book: PropTypes.object.isRequired,
     shelves: PropTypes.array.isRequired,
-    handleShelfUpdate: PropTypes.func.isRequired
+    handleShelfUpdate: PropTypes.func.isRequired,
+    bookShelf: PropTypes.string.isRequired
 }
 
 export default Book;

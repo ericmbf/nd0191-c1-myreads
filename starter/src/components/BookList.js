@@ -11,6 +11,7 @@ const BookList = ({ books, shelves, handleShelfUpdate}) => {
                                 book={book} 
                                 shelves={shelves} 
                                 handleShelfUpdate={handleShelfUpdate}
+                                bookShelf={book.shelf}
                             />)
                 }) : ""
             }
