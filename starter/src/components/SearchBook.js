@@ -7,15 +7,18 @@ const SearchBook = ({ books, shelves, handleShelfUpdate}) => {
 
     const [query, setQuery] = useState("");
 
-    const checkAuthor = (query, array) => array.some((element) => {
+    const checkIncludeQuery = (query, array) => array.some((element) => {
         return element.toLowerCase().includes(query.trim().toLowerCase());
     });
 
     const showingBooks =
         query === "" ?
         books : books.filter((c) => {
-            return checkAuthor(query, c.authors) ||
-                c.title.toLowerCase().includes(query.toLowerCase()) ;
+            console.log(c);
+            return checkIncludeQuery(query, c.authors) ||
+                    checkIncludeQuery(query, 
+                        c.industryIdentifiers.map((ident) => ident.identifier)) ||
+                    c.title.toLowerCase().includes(query.toLowerCase());
         }
     );
 
