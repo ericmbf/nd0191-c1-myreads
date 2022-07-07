@@ -6,14 +6,29 @@ import Book from "./Book";
 const SearchBook = ({ books, shelves, handleShelfUpdate}) => {
 
     const [query, setQuery] = useState("");
+    const [searchBooks, setSearchBooks] = useState([]);
 
     const checkIncludeQuery = (query, array) => array.some((element) => {
         return element.toLowerCase().includes(query.trim().toLowerCase());
     });
 
+    const handleSearchBookApi = (query) => {
+        if (query !== "") {
+            BooksAPI.search(query, 20).then((res) => {
+                if (res.length) {
+                    setSearchBooks(res);
+                }
+            }, () => setSearchBooks([]));
+        }
+        else{
+            setSearchBooks([]);
+        }
+        console.log(searchBooks);
+    }
+
     const showingBooks =
         query === "" ?
-        books : books.filter((c) => {
+        [] : books.filter((c) => {
             console.log(c);
             return checkIncludeQuery(query, c.authors) ||
                     checkIncludeQuery(query, 
@@ -22,8 +37,9 @@ const SearchBook = ({ books, shelves, handleShelfUpdate}) => {
         }
     );
 
-    const handleQuery = (event) => {
+    const handleQueryChange = (event) => {
         setQuery(event.target.value);
+        handleSearchBookApi(event.target.value);
     }
 
     return (
@@ -38,13 +54,13 @@ const SearchBook = ({ books, shelves, handleShelfUpdate}) => {
                         type="text"
                         placeholder="Search by title, author, or ISBN"
                         value={query}
-                        onChange={(e) => handleQuery(e)}
+                        onChange={(e) => handleQueryChange(e)}
                     />
                 </div>
             </div>
             <div className="search-books-results">
-                <ol className="books-grid">
-                    {showingBooks.map((book, index) => {
+                  <ol className="books-grid">
+                    {searchBooks.map((book, index) => {
                         return <Book 
                             key={index}
                             book={book} 
@@ -59,7 +75,7 @@ const SearchBook = ({ books, shelves, handleShelfUpdate}) => {
 }
 
 SearchBook.propTypes = {
-    books: PropTypes.array.isRequired,
+    shelves: PropTypes.array.isRequired,
     handleShelfUpdate: PropTypes.func.isRequired,
 }
 
