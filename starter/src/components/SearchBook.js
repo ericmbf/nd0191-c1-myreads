@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState} from 'react';
+import { useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
 import Book from "./Book";
 import * as BooksAPI from "../utils/BooksAPI"
@@ -8,6 +8,7 @@ const SearchBook = ({ booksFromUser, shelves, handleShelfUpdate }) => {
 
     const [query, setQuery] = useState("");
     const [searchBooks, setSearchBooks] = useState([]);
+    const [showingBooks, setShowingBooks] = useState([]);
 
     const getAuthorsFromBook = book => {
         return 'authors' in book ? book.authors : [];
@@ -28,6 +29,9 @@ const SearchBook = ({ booksFromUser, shelves, handleShelfUpdate }) => {
                 if (res.length) {
                     setSearchBooks(res);
                 }
+                else{
+                    setSearchBooks([]);
+                }
             }, () => setSearchBooks([]));
         }
         else{
@@ -35,14 +39,6 @@ const SearchBook = ({ booksFromUser, shelves, handleShelfUpdate }) => {
         }
     }
 
-    const showingBooks =
-        query === "" ?
-        [] : searchBooks.filter((book) => {
-            return checkIncludeQuery(query, getAuthorsFromBook(book)) ||
-                    checkIncludeQuery(query, getIndetifiersFromBook(book)) ||
-                    book.title.toLowerCase().includes(query.toLowerCase());
-        }
-    );
 
     const handleQueryChange = (event) => {
         setQuery(event.target.value);
@@ -53,6 +49,17 @@ const SearchBook = ({ booksFromUser, shelves, handleShelfUpdate }) => {
         let bookList = booksFromUser.filter((bookUser) => bookUser.id === book.id);
         return bookList.length ? bookList[0].shelf : "none";
     }
+
+    useEffect(() => {
+        console.log(query);
+        let books = query === "" ? [] : searchBooks.filter((book) => {
+            return checkIncludeQuery(query, getAuthorsFromBook(book)) ||
+                    checkIncludeQuery(query, getIndetifiersFromBook(book)) ||
+                    book.title.toLowerCase().includes(query.toLowerCase());
+            });
+
+        setShowingBooks(books);
+    }, [searchBooks]);
 
     return (
         <div className="search-books">
